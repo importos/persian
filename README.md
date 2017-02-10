@@ -1,5 +1,4 @@
 # persian
-sublime text 3 show persian text in command line<br/>
+sublime text 3 show persian text in panel bidirectioan support<br/>
 copy persian folder to Packages<br/>
-press ctrl+ \`<br/>
-in console panel show your typed text<br/>
+in persian panel show your typed text<br/>
