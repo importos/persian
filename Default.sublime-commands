@@ -1,0 +1,11 @@
+[
+    {
+        "caption": "Persian: Show panel",
+        "command": "sftp_upload_file"
+    },
+    {
+        "caption": "Persian: Hide panel",
+        "command": "sftp_upload_open_files"
+    },
+
+]
