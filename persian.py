@@ -6,42 +6,42 @@ import persian.bidi
 import persian.persian_reshaper as pr
 from persian.bidi import algorithm
 
-class p1(sublime_plugin.WindowCommand):
+class perisn_test(sublime_plugin.WindowCommand):
 	def run(self):
 		w = self.window
-		p2=w.create_output_panel('test')
-		print(dir(p2))
-		print(w.panels())
-class p2(sublime_plugin.WindowCommand):
-	def run(self):
+		p1=w.get_output_panel('persian_panel')
+		if p1.window()==None:
+			w.run_command('show_panel', { 'panel': 'output.persian_panel' })
+		print (p1.id())
+		print (w.panels())
+		p1.run_command("insert",{"characters": '123'})
+class persian_show(sublime_plugin.WindowCommand):
+	def run(self,data):
 		w = self.window
-		w.run_command('show_panel', { 'panel': 'output.test' })
-		p3=w.get_output_panel('test')
-		p3.run_command("insert",{"characters": "Hello"})
-class p3(sublime_plugin.EventListener):
+		p1=w.get_output_panel('persian_panel')
+		if p1.window()==None:
+			w.run_command('show_panel', { 'panel': 'output.persian_panel' })
+		print(data)
+		p1.run_command("insert",{"characters": data})
+class persian_event(sublime_plugin.EventListener):
+	def convert_persian(self,data):
+		return algorithm.get_display(pr.reshape(data),'utf-8',True)
 	def on_selection_modified(self, view):
-		w = view.window()
-		if w!=None:
-			p3=w.get_output_panel('test')
-			# print(dir(view))
-			# print(dir(view.sel()))
-			l1={}
-			l2=[]
-			for itm in view.sel():
-				if str(itm) in l1:
-					continue
-				txt=view.substr(view.line(itm))
-				l1[str(itm)]=txt
-				l2.append(str(itm))
-			o1=''
-			pre=''
-			for itm in l2:
-				o1+=pre
-				o1+=l1[itm]
-				pre='\n'
-			t1=pr.reshape(o1)
-			t2=algorithm.get_display(t1,'utf-8',True)
-			print(t2)
-
-			# p3.run_command("insert",{"characters": t2})
+		o1=''
+		pre=''
+		for itm in view.sel():
+			txt=view.substr(view.line(itm))
+			o1+=pre
+			o1+=txt
+			pre='\n'
+		po1=self.convert_persian(o1)
+		# print(po1)
+		if view.window()!=None:
+			p1=view.window().get_output_panel('persian_panel')
+			# print(p1.id(),view.id())
+			if p1.view_id!=view.view_id:
+				# print(po1)
+				view.window().run_command('persian_show',{'data':po1})
+			else:
+				return False
 
