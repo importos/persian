@@ -1,4 +1,4 @@
 [
-	{ "keys": ["ctrl+alt+p","ctrl+alt+s"], "command": "persian_panel_show" },
+	{ "keys": ["ctrl+alt+p","ctrl+alt+d"], "command": "persian_panel_show" },
 	{ "keys": ["ctrl+alt+p","ctrl+alt+h"], "command": "persian_panel_hide" },
 ]

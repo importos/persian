@@ -32,16 +32,16 @@ class persian_async_insert(sublime_plugin.TextCommand):
 		w = self.view.window()
 		p1=w.find_output_panel('persian_panel')
 		if p1!=None:
-			liens=p1.lines(sublime.Region(0,p1.size()))
-			lines100=liens[101:]
-			r1=liens[100]
-			print (r1)
-			for itm in lines100:
+			lines=p1.lines(sublime.Region(0,p1.size()))
+			if len(lines)>100:
+				lines100=lines[101:]
+				r1=lines[100]
 
-				r1=r1.cover(itm)
+				for itm in lines100:
 
-			print(r1)
-			p1.erase(edit,r1)
+					r1=r1.cover(itm)
+
+				p1.erase(edit,r1)
 			p1.insert(edit,0,data)
 			print (data)
 		else:
