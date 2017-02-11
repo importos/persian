@@ -32,20 +32,20 @@ class persian_async_insert(sublime_plugin.TextCommand):
 		w = self.view.window()
 		p1=w.find_output_panel('persian_panel')
 		if p1!=None:
-			lines=p1.lines(sublime.Region(0,p1.size()))
-			if len(lines)>100:
-				lines100=lines[101:]
-				r1=lines[100]
+			if p1.window()!=None:
+				lines=p1.lines(sublime.Region(0,p1.size()))
+				if len(lines)>100:
+					lines100=lines[101:]
+					r1=lines[100]
 
-				for itm in lines100:
+					for itm in lines100:
 
-					r1=r1.cover(itm)
+						r1=r1.cover(itm)
 
-				p1.erase(edit,r1)
-			p1.insert(edit,0,data)
-			print (data)
-		else:
-			print (data)
+					p1.erase(edit,r1)
+				p1.insert(edit,0,data)
+				# p1.run_command('insert',{'characters':data})
+		print (data)
 
 class persian_event(sublime_plugin.EventListener):
 	def convert_persian(self,data):
@@ -74,6 +74,7 @@ class persian_event(sublime_plugin.EventListener):
 
 			# print(po1)
 			view.run_command('persian_async_insert',{'data':po1+'\n'})
+			return True
 		else:
-			return False
+			return True
 
